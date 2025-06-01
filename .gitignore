@@ -1,0 +1,125 @@
+# Python bytecode fayllari
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual muhit papkalari
+venv/
+env/
+.venv/
+.env/
+ENV/
+env.bak/
+venv.bak/
+
+# Django fayllari
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Django migrations fayllari (agar kerak bo'lmasa versiya nazoratda)
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/__pycache__/
+*/migrations/*.py
+# Agar migrations fayllarini versiya nazoratda saqlamoqchi bo'lsangiz, quyidagi qatorda izoh qoldiring:
+# !*/migrations/__init__.py
+
+# Django settings faylida maxfiy sozlamalar uchun fayl
+*.sqlite3
+db.sqlite3
+
+# Mac OS fayllari
+.DS_Store
+
+# Windows fayllari
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE va tahrirlovchi papkalar / fayllar
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.pydevproject
+
+# PyCharm
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Jupyter Notebook checkpoint fayllari
+.ipynb_checkpoints
+
+# Coverage Reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Pytype
+.pytype/
+
+# Cython debug fayllari
+cython_debug/
+
+# Logs va runtime fayllari
+logs/
+*.log
+
+# Django stuff:
+local_settings.py
+media
+staticfiles
+/staticfiles/
+# maxsus media fayllarini qo'shing, agar kerak bo'lsa:
+media/
+
+# Celery beat scheduler fayli
+celerybeat-schedule
+
+# Gunicorn log fayllari
+gunicorn.log
+
+# dotenv fayllari
+.env
+.env.*
+
+
+# Test fayllar va vaqtinchalik fayllar
+*.orig
+*.tmp
+*.bak
+*.swp
+*~
+
+# Pycharm virtualenv konfiguratsiyasi
+.idea/
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# pyenv
+.python-version
+
+# pip cache
+pip-log.txt
+pip-delete-this-directory.txt
