@@ -6,4 +6,4 @@ class RegisterAPIView(CreateAPIView):
     serializer_class = RegisterSerializer
 
 
-__all__ = ['RegisterSerializer']
+__all__ = ['RegisterAPIView']

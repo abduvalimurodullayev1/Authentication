@@ -12,3 +12,6 @@ class LoginAPIView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         tokens = serializer.save()
         return Response(tokens, status=status.HTTP_200_OK)
+
+
+__all__ = ['LoginAPIView']

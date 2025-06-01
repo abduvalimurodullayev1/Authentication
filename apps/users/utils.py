@@ -19,6 +19,7 @@ def generate_access_token(user):
 
 
 
+
 def generate_refresh_token(user, ip_address=None, user_agent=None):
     expires_at = datetime.datetime.utcnow() + datetime.timedelta(days=7)
     payload = {
@@ -42,3 +43,4 @@ def generate_refresh_token(user, ip_address=None, user_agent=None):
     )
 
     return token, token_obj
+

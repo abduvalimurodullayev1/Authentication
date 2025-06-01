@@ -29,7 +29,6 @@ class RefreshToken(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.TextField(unique=True)
     is_valid = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     user_agent = models.TextField()

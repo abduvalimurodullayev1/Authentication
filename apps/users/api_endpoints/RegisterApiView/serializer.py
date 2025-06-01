@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.utils import timezone
 from apps.users.models import User
+from apps.users.helpers import *
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -23,6 +24,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
+        request = self.context.get("request")
+
         user = User(
             email=validated_data['email'].lower(),
             username=validated_data['username'],
@@ -31,4 +34,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.date_joined = timezone.now()
         user.save()
+        if request:
+            log_auth_action(
+                user=user,
+                action=AuthLog.ActionChoices.REGISTER,
+                request=request,
+                metadata={"info": "Foydalanuvchi ro‘yxatdan o‘tdi"}
+            )
+
         return user

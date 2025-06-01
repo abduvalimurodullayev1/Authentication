@@ -1,7 +1,11 @@
+from datetime import datetime
+from datetime import timezone
 from django.contrib.auth import authenticate
-from rest_framework_simplejwt.tokens import RefreshToken
-from apps.users.models import RefreshToken as RefreshTokenModel, AuthLog
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from apps.users.helpers import get_client_ip, get_user_agent, log_auth_action
+from apps.users.models import RefreshToken as RefreshTokenModel, AuthLog
 
 
 class LoginSerializer(serializers.Serializer):
@@ -21,17 +25,16 @@ class LoginSerializer(serializers.Serializer):
         user = validated_data['user']
         request = self.context.get('request')
 
-        ip = request.META.get('HTTP_X_FORWARDED_FOR')
-        if ip:
-            ip = ip.split(',')[0]
-        else:
-            ip = request.META.get('REMOTE_ADDR')
+        ip = get_client_ip(request)
+        user_agent = get_user_agent(request)
 
-        user_agent = request.headers.get('User-Agent', '')
-
+        # JWT tokenlar
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
         refresh_token = str(refresh)
+
+        expires_timestamp = refresh.payload['exp']  # epoch (UTC)
+        expires_at = datetime.fromtimestamp(expires_timestamp, tz=timezone.utc)
 
         RefreshTokenModel.objects.create(
             user=user,
@@ -39,14 +42,14 @@ class LoginSerializer(serializers.Serializer):
             ip_address=ip,
             user_agent=user_agent,
             is_valid=True,
+            expires_at=expires_at,
         )
 
-        AuthLog.objects.create(
+        log_auth_action(
             user=user,
             action=AuthLog.ActionChoices.LOGIN,
-            ip_address=ip,
-            user_agent=user_agent,
-            metadata={"Action": "Logged in"}
+            request=request,
+            metadata={"action": "User logged in"}
         )
 
         return {

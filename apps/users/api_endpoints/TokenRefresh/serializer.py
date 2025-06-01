@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
+from apps.users.models import RefreshToken as RefreshTokenModel
 
-from apps.users.models import RefreshToken
 
 class TokenRefreshSerializer(serializers.Serializer):
     refresh_token = serializers.CharField(write_only=True)
@@ -10,8 +10,8 @@ class TokenRefreshSerializer(serializers.Serializer):
         token = attrs.get('refresh_token')
 
         try:
-            refresh_token_obj = RefreshToken.objects.get(token=token, is_valid=True)
-        except RefreshToken.DoesNotExist:
+            refresh_token_obj = RefreshTokenModel.objects.get(token=token, is_valid=True)
+        except RefreshTokenModel.DoesNotExist:
             raise serializers.ValidationError("Invalid or expired refresh token.")
 
         if refresh_token_obj.expires_at and refresh_token_obj.expires_at < timezone.now():
