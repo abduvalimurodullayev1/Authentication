@@ -99,6 +99,7 @@ gunicorn.log
 # dotenv fayllari
 .env
 .env.*
+!.env.example
 
 
 # Test fayllar va vaqtinchalik fayllar
